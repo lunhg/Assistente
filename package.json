@@ -1,7 +1,7 @@
 {
   "name": "assistente",
   "description": "assistente-backend",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "homepage": "https://assistente.dev.org.br",
   "main": "src",
   "keywords": [

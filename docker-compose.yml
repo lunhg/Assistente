@@ -24,7 +24,7 @@ services:
       - "TELEGRAM_ADMINS=${TELEGRAM_ADMINS}"
       - "TELEGRAM_TOKEN=${TELEGRAM_TOKEN}"
       - "AUTHENTICATION_SECRET=${AUTHENTICATION_SECRET}"
-    docs:
+  docs:
     image: assistente:docs
     ports:
       - "3001:80" 
