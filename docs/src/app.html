@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>app.js</title>
+  <title>Feathers</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="../docco.css" />
@@ -27,6 +27,21 @@
                 
                 <a class="source" href="app.html">
                   src/app.js
+                </a>
+              
+                
+                <a class="source" href="assets/data.html">
+                  src/assets/data.js
+                </a>
+              
+                
+                <a class="source" href="assets/index.html">
+                  src/assets/index.js
+                </a>
+              
+                
+                <a class="source" href="assets/onTelegramAuth.html">
+                  src/assets/onTelegramAuth.js
                 </a>
               
                 
@@ -111,12 +126,6 @@
     
     <ul class="sections">
         
-          <li id="title">
-              <div class="annotation">
-                  <h1>app.js</h1>
-              </div>
-          </li>
-        
         
         
         <li id="section-1">
@@ -154,7 +163,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>now start</p>
+              <h1 id="feathers">Feathers</h1>
+<p><a href="https://feathersjs.com/">Feathers</a> is a framework that have a nice
+paradigm on bootstrap a express.js server application.</p>
 
             </div>
             
@@ -169,13 +180,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Load app configuration</p>
+              <h1 id="configuration">Configuration</h1>
+<p>Load app configuration with
+a customization of official @feathersjs/configuration
+(see <a href="../package.json">package.json</a> for more) </p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.configure(configuration({
-  <span class="hljs-attr">path</span>: path.join(__dirname, <span class="hljs-string">'..'</span>, <span class="hljs-string">'.env'</span>)
-}));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>app.configure(configuration());</pre></div></div>
             
         </li>
         
@@ -190,24 +202,6 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.engine(<span class="hljs-string">'tml'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">filePath, options, callback</span>) </span>{
-  fs.readFile(filePath, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, content</span>)</span>{
-    <span class="hljs-keyword">if</span>(!err){
-      content = content.toString();
-      <span class="hljs-keyword">const</span> title = app.get(<span class="hljs-string">'name'</span>);
-      content = content.replace(<span class="hljs-string">'{{ title }}'</span>, title);
-      content = content.replace(<span class="hljs-string">'{{ title }}'</span>, title);
-      <span class="hljs-keyword">const</span> bot_name = app.get(<span class="hljs-string">"authentication"</span>).telegram.username;
-      content = content.replace(<span class="hljs-string">'{{ bot_name }}'</span>, bot_name);
-      <span class="hljs-keyword">const</span> audience = app.get(<span class="hljs-string">'authentication'</span>).jwt.payload.audience;  
-      content = content.replace(<span class="hljs-string">'{{ audience }}'</span>, audience);
-      callback(<span class="hljs-literal">null</span>, content);
-    } <span class="hljs-keyword">else</span> {
-      callback(err);
-    }
-  });
-});</pre></div></div>
-            
         </li>
         
         
@@ -221,7 +215,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.set(<span class="hljs-string">'views'</span>, path.join(__dirname, <span class="hljs-string">'views'</span>)); 
+            <div class="content"><div class='highlight'><pre>app.set(<span class="hljs-string">'views'</span>, path.join(__dirname, <span class="hljs-string">'views'</span>));
+app.set(<span class="hljs-string">'assets'</span>, path.join(__dirname, <span class="hljs-string">'assets'</span>));
+app.set(<span class="hljs-string">'public'</span>, path.join(__dirname, <span class="hljs-string">'..'</span>, <span class="hljs-string">'public'</span>)); 
 app.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'tml'</span>);
 
 <span class="hljs-keyword">let</span> auth = app.get(<span class="hljs-string">'authentication'</span>);
@@ -262,10 +258,18 @@ app.use(favicon(path.join(app.get(<span class="hljs-string">'public'</span>), <s
             </div>
             
             <div class="content"><div class='highlight'><pre>app.use(express.static(app.get(<span class="hljs-string">'public'</span>)));
-app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>)</span>{
-  logger.debug(<span class="hljs-string">'GET /'</span>);
-  res.render(<span class="hljs-string">'index'</span>);
-});</pre></div></div>
+<span class="hljs-keyword">const</span> __index__ = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">name, fn</span>)</span>{
+  <span class="hljs-keyword">let</span> index_path = path.join(app.get(<span class="hljs-string">'assets'</span>), name);
+  fs.readFile(index_path, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, data</span>)</span>{
+    <span class="hljs-keyword">if</span>(err) {
+      logger.debug(err);
+      fn(err);
+    } <span class="hljs-keyword">else</span> {
+      logger.debug(<span class="hljs-string">'Sending '</span>+index_path);
+      fn(data);
+    }
+  });
+};</pre></div></div>
             
         </li>
         
@@ -275,6 +279,37 @@ app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span 
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>The index.html, bundle.js and bundle.css are build with Vue</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>)</span>{
+  __index__(<span class="hljs-string">'index.html'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>{
+    res.send(data);
+  });
+});
+
+app.get(<span class="hljs-string">'/assets/js/bundle.js'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>)</span>{
+  __index__(<span class="hljs-string">'public/bundle.js'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>{
+    res.send(data);
+  });
+});
+
+app.get(<span class="hljs-string">'/assets/css/bundle.css'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>)</span>{
+  __index__(<span class="hljs-string">'public/bundle.css'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>{
+    res.send(data);
+  });
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Configure Swagger Api</p>
 
@@ -287,11 +322,11 @@ app.configure(swagger(_swagger_));</pre></div></div>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Set up Plugins and providers</p>
 
@@ -303,11 +338,11 @@ app.configure(mongoose);</pre></div></div>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Configure other middleware (see <code>middleware/index.js</code>)</p>
 
@@ -319,11 +354,11 @@ app.configure(authentication);</pre></div></div>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Set up our services (see <code>services/index.js</code>)</p>
 
@@ -334,11 +369,11 @@ app.configure(authentication);</pre></div></div>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Configure a middleware for 404s and the error handler</p>
 
@@ -351,11 +386,11 @@ app.hooks(appHooks);</pre></div></div>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Go</p>
 

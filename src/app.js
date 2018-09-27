@@ -24,31 +24,14 @@ const app = express(feathers());
 // Load app configuration with
 // a customization of official @feathersjs/configuration
 // (see [package.json](../package.json) for more) 
-app.configure(configuration({
-  path: path.join(__dirname, '..', '.env')
-}));
+app.configure(configuration());
 
 // Reconfigure public/index.html
-app.engine('tml', function (filePath, options, callback) {
-  fs.readFile(filePath, function(err, content){
-    if(!err){
-      content = content.toString();
-      const title = app.get('name');
-      content = content.replace('{{ title }}', title);
-      content = content.replace('{{ title }}', title);
-      const bot_name = app.get('authentication').telegram.username;
-      content = content.replace('{{ bot_name }}', bot_name);
-      const audience = app.get('authentication').jwt.payload.audience;  
-      content = content.replace('{{ audience }}', audience);
-      callback(null, content);
-    } else {
-      callback(err);
-    }
-  });
-});
 
 // specify the views directory
-app.set('views', path.join(__dirname, 'views')); 
+app.set('views', path.join(__dirname, 'views'));
+app.set('assets', path.join(__dirname, 'assets'));
+app.set('public', path.join(__dirname, '..', 'public')); 
 app.set('view engine', 'tml');
 
 let auth = app.get('authentication');
@@ -66,9 +49,36 @@ app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 
 // Host the public folder
 app.use(express.static(app.get('public')));
+const __index__ = function(name, fn){
+  let index_path = path.join(app.get('assets'), name);
+  fs.readFile(index_path, function(err, data){
+    if(err) {
+      logger.debug(err);
+      fn(err);
+    } else {
+      logger.debug('Sending '+index_path);
+      fn(data);
+    }
+  });
+};
+
+// The index.html, bundle.js and bundle.css are build with Vue
 app.get('/', function(req, res){
-  logger.debug('GET /');
-  res.render('index');
+  __index__('index.html', function(data){
+    res.send(data);
+  });
+});
+
+app.get('/assets/js/bundle.js', function(req, res){
+  __index__('public/bundle.js', function(data){
+    res.send(data);
+  });
+});
+
+app.get('/assets/css/bundle.css', function(req, res){
+  __index__('public/bundle.css', function(data){
+    res.send(data);
+  });
 });
 
 // Configure Swagger Api

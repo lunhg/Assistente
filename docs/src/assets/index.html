@@ -30,17 +30,17 @@
                 </a>
               
                 
-                <a class="source" href="../assets/data.html">
+                <a class="source" href="data.html">
                   src/assets/data.js
                 </a>
               
                 
-                <a class="source" href="../assets/index.html">
+                <a class="source" href="index.html">
                   src/assets/index.js
                 </a>
               
                 
-                <a class="source" href="../assets/onTelegramAuth.html">
+                <a class="source" href="onTelegramAuth.html">
                   src/assets/onTelegramAuth.js
                 </a>
               
@@ -75,7 +75,7 @@
                 </a>
               
                 
-                <a class="source" href="index.html">
+                <a class="source" href="../middleware/index.html">
                   src/middleware/index.js
                 </a>
               
@@ -140,27 +140,27 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>eslint-disable-next-line no-unused-vars</p>
+              <p>index.js</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app</span>) </span>{</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>Add your custom middleware here. Remember that
-in Express, the order matters.</p>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> Vue = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vue'</span>);
+<span class="hljs-keyword">const</span> Index = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../views/components/Index.vue'</span>);
+<span class="hljs-keyword">const</span> Data = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./data.js'</span>);
+<span class="hljs-keyword">const</span> onTelegramAuth = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./onTelegramAuth.js'</span>);
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>};</pre></div></div>
+<span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#Assistente'</span>,
+  data () {
+    <span class="hljs-keyword">return</span> Data;
+  },
+  <span class="hljs-attr">methods</span>: {
+    <span class="hljs-attr">onTelegramAuth</span>: onTelegramAuth
+  },
+  <span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">createElement</span>) </span>{
+    <span class="hljs-keyword">return</span> createElement(Index);
+  }
+});</pre></div></div>
             
         </li>
         

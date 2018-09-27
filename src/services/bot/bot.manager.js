@@ -39,13 +39,10 @@ class TelegrafManager {
   build (app, telegraf) {
     Object.keys(this.manager).forEach(manages => {
       // console.log(`${this.manager[manages]}`);
-      const t = this.manager;	 
-      console.log(manages);
-      console.log(t[manages]);
+      const managed = this.manager[manages];	 
       // now manages every command defined by objects as templates
-      Object.keys(t[manages]).map(command => {
-        console.log(command);
-        // A command is defined by slash with the command name
+      Object.keys(managed).map(command => {
+        // telegraf command comunicate with REST
         telegraf.command(command, (ctx) => {
           app.service('users').find({ telegramId: ctx.chat.id }).then(function(res){
             // Fake a environment
