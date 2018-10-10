@@ -1,6 +1,6 @@
 {
   "host": "localhost",
-  "port": 3030,
+  "port": "PORT",
   "public": "../public/",
   "paginate": {
     "default": 10,
@@ -17,6 +17,18 @@
     "db": "REDIS_DB"
   },
   "authentication":{
-    "secret": "SECRET"
+    "secret": "SECRET",
+    "jwt":{
+      "headers":{
+        "expiresIn": {
+          "seconds": 60,
+          "minutes": 60,
+          "hours": 24,
+          "days": 30
+        },
+        "audience":"JWT_AUDIENCE",
+        "issuer":"JWT_ISSUER"
+      }
+    }
   }
 }

@@ -1,34 +1,17 @@
-version: '3'
+version: '2'
 services: 
-  master:
-    image: assistente:master
-    ports:
-      - "3030:3000" 
+  api:
+    image: redelivre/alpine-assistente:api
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      - "HOST=localhost"
-      - "PORT=3000"
-      - "MONGODB_USERNAME=assistente"
-      - "MONGODB_PWD=${MONGODB_PWD}"
-      - "MONGODB_HOST=ds231242.mlab.com"
-      - "MONGODB_PORT=31242"
-      - "MONGODB_DBNAME=assistente"
-      - "JWT_AUDIENCE=http://api.assistente.dev.org.br"
-      - "JWT_ISSUER=feathers-redelivre"
-      - "OPENID_ISSUER=https://id.org.br"
-      - "OPENID_REDIRECT_URL=http://api.assistente.dev.org.br/authorization"
-      - "OPENID_ID=${OPENID_ID}"                                  
-      - "OPENID_SECRET=${OPENID_SECRET}"
-      - "TELEGRAM_USERNAME=R4dar_bot"
-      - "TELEGRAM_ADMINS=${TELEGRAM_ADMINS}"
-      - "TELEGRAM_TOKEN=${TELEGRAM_TOKEN}"
-      - "AUTHENTICATION_SECRET=${AUTHENTICATION_SECRET}"
-  docs:
-    image: assistente:docs
-    ports:
-      - "3031:3000" 
-    build: 
-      context: .
-      dockerfile: Dockerfile.docs
+      args:
+        - "node_env=$assistente_node_env"
+        - "port=$assistente_port"
+        - "redis_host=$assistente_redis_host"
+        - "redis_port=$assistente_redis_port"
+        - "redis_db=$assistente_redis_db"
+        - "secret=$assistente_secret"
+        - "jwt_audience=$assistente_jwt_audience"
+        - "jwt_issuer=$assistente_jwt_issuer"
+        

@@ -1,8 +1,8 @@
 {
   "name": "assistente",
   "description": "assistente backend with redis and graphql for admin telegram bots",
-  "version": "0.0.0",
-  "homepage": "",
+  "version": "0.0.13",
+  "homepage": "https://api.assistente.dev.org.br",
   "main": "src",
   "keywords": [
     "feathers"
@@ -18,7 +18,7 @@
     "test": "test/"
   },
   "engines": {
-    "node": "^8.0.0",
+    "node": "^10.0.0",
     "yarn": ">= 0.18.0"
   },
   "scripts": {

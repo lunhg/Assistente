@@ -15,12 +15,16 @@ process.on('unhandledRejection', (reason, p) => {
   // !<DEFAULT> code: unhandled_rejection_log
   logger.error('Unhandled Rejection at: Promise ', p, reason);
   // !end
-  // !code: unhandled_rejection // !end
+  // !code: unhandled_rejection
+  p.catch(function(err){
+    console.log(err);
+  })
+  // !end
 });
 
 server.on('listening', () => {
   // !<DEFAULT> code: listening_log
-  logger.info('Feathers application started on http://%s:%d', app.get('host'), port);
+  logger.info(`Feathers application started on ::${port}`);
   // !end
   // !code: listening // !end
   seedData(app);
