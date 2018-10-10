@@ -1,20 +1,21 @@
 
-// Application hooks that run for every service. (Can be re-generated.)
+// Hooks for service `bots`. (Can be re-generated.)
 const commonHooks = require('feathers-hooks-common');
-// !<DEFAULT> code: imports
-const log = require('./hooks/log');
-// !end
+// !code: imports // !end
 
 // !<DEFAULT> code: used
 // eslint-disable-next-line no-unused-vars
 const { iff } = commonHooks;
+// eslint-disable-next-line no-unused-vars
+const { create, update, patch, validateCreate, validateUpdate, validatePatch } = require('./bots.validate');
 // !end
+
 // !code: init // !end
 
 let moduleExports = {
   before: {
     // !<DEFAULT> code: before
-    all: [ log() ],
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -26,7 +27,7 @@ let moduleExports = {
 
   after: {
     // !<DEFAULT> code: after
-    all: [ log() ],
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -38,7 +39,7 @@ let moduleExports = {
 
   error: {
     // !<DEFAULT> code: error
-    all: [ log() ],
+    all: [],
     find: [],
     get: [],
     create: [],

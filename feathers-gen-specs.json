@@ -1,0 +1,43 @@
+{
+  "options": {
+    "ver": "1.0.0",
+    "inspectConflicts": false,
+    "semicolons": true,
+    "freeze": [],
+    "ts": false
+  },
+  "app": {
+    "environmentsAllowingSeedData": "test",
+    "seedData": true,
+    "name": "assistente",
+    "description": "assistente backend with redis and graphql for admin telegram bots",
+    "src": "src",
+    "packager": "yarn@>= 0.18.0",
+    "providers": [
+      "rest"
+    ]
+  },
+  "services": {
+    "bots": {
+      "name": "bots",
+      "nameSingular": "bot",
+      "subFolder": "",
+      "fileName": "bots",
+      "adapter": "generic",
+      "path": "/bots",
+      "isAuthEntity": false,
+      "graphql": true
+    },
+    "users": {
+      "name": "users",
+      "nameSingular": "user",
+      "subFolder": "",
+      "fileName": "users",
+      "adapter": "generic",
+      "path": "/users",
+      "isAuthEntity": false,
+      "graphql": true
+    }
+  },
+  "hooks": {}
+}

@@ -1,14 +1,18 @@
-const users = require('./users/users.service.js');
-const bot = require('./bot/bot.service.js');
-const servicos = require('./servicos/servicos.service.js');
-const grupos = require('./grupos/grupos.service.js');
-const issuer = require('./issuer/issuer.service.js');
+
+// Configure the Feathers services. (Can be re-generated.)
+let bots = require('./bots/bots.service');
+
+// !code: imports // !end
+// !code: init // !end
 
 // eslint-disable-next-line no-unused-vars
-module.exports = function (app) {
-  app.configure(users);
-  app.configure(bot);
-  app.configure(servicos);
-  app.configure(grupos);
-  app.configure(issuer);
+let moduleExports = function (app) {
+  app.configure(bots);
+  // !code: func_return // !end
 };
+
+// !code: exports // !end
+module.exports = moduleExports;
+
+// !code: funcs // !end
+// !code: end // !end
